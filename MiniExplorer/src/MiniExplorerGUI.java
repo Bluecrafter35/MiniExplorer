@@ -1,3 +1,9 @@
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,13 +16,28 @@
  */
 public class MiniExplorerGUI extends javax.swing.JFrame
 {
-
+    private DateiModell model = new DateiModell();
+    
     /**
      * Creates new form MiniExplorerGUI
      */
     public MiniExplorerGUI()
     {
         initComponents();
+        this.jlList.setModel(model);
+        File dir = new File(".");
+        try {
+            this.setTitle(dir.getCanonicalPath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        Datei d;
+        for(File f: dir.listFiles())
+        {
+            //f.getAbsolutePath();
+            d= new Datei(f.getAbsolutePath());
+            model.addDatei(d);
+        }
     }
 
     /**
@@ -34,6 +55,13 @@ public class MiniExplorerGUI extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jlList.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                onChangeDir(evt);
+            }
+        });
         jScrollPane1.setViewportView(jlList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -55,6 +83,14 @@ public class MiniExplorerGUI extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void onChangeDir(java.awt.event.MouseEvent evt)//GEN-FIRST:event_onChangeDir
+    {//GEN-HEADEREND:event_onChangeDir
+        if(evt.getClickCount()>1)
+        {
+            
+        }
+    }//GEN-LAST:event_onChangeDir
 
     /**
      * @param args the command line arguments
