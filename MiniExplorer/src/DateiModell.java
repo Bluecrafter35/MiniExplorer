@@ -16,6 +16,12 @@ public class DateiModell extends AbstractListModel
 {
     private ArrayList<Datei> dateien = new ArrayList<>();
     
+    public void addDatei(Datei d)
+    {
+        dateien.add(d);
+        fireIntervalAdded(this, dateien.size()-1, dateien.size()-1);
+    }
+    
     @Override
     public int getSize()
     {
