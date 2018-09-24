@@ -1,0 +1,2 @@
+# MiniExplorer
+MiniExplorer netbeans Projekt
