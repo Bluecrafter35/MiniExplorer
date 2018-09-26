@@ -39,9 +39,13 @@ public class FileListRenderer implements ListCellRenderer
                 c.setForeground(Color.BLUE);
             }
             
-            if(d.isFile() &&isSelected)
+            if(d.isFile() && isSelected)
             {
-                c.setBackground(Color.YELLOW);
+                c.setBackground(Color.ORANGE);
+            }
+            else if(d.isDirectory() && isSelected)
+            {
+                c.setBackground(Color.GRAY);
             }
             return c;
         }
