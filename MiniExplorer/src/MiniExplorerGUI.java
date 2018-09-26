@@ -27,6 +27,8 @@ public class MiniExplorerGUI extends javax.swing.JFrame
     {
         initComponents();
         this.jlList.setModel(model);
+        this.jlList.setCellRenderer(new FileListRenderer());
+        
         dir = new File(".");
         
         try {
@@ -63,6 +65,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jlList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jlList.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
@@ -108,8 +111,14 @@ public class MiniExplorerGUI extends javax.swing.JFrame
                     model.addDatei(d);
                     
                 }
+                try {
+                    this.setTitle(dir.getCanonicalPath());
+                } catch (IOException ex) {
+                    Logger.getLogger(MiniExplorerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 model.addDatei(new Datei(".."));
                 model.sort(fc);
+                
             }
             else
             {
