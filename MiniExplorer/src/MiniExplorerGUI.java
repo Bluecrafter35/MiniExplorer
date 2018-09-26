@@ -26,6 +26,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame
         initComponents();
         this.jlList.setModel(model);
         File dir = new File(".");
+        FileComparer fc = new FileComparer();
         try {
             this.setTitle(dir.getCanonicalPath());
         } catch (IOException ex) {
@@ -35,9 +36,12 @@ public class MiniExplorerGUI extends javax.swing.JFrame
         for(File f: dir.listFiles())
         {
             //f.getAbsolutePath();
+            
             d= new Datei(f.getAbsolutePath());
             model.addDatei(d);
         }
+        model.addDatei(new Datei(".."));
+        model.sort(fc);
     }
 
     /**
