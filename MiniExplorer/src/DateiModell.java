@@ -22,6 +22,12 @@ public class DateiModell extends AbstractListModel
         fireIntervalAdded(this, dateien.size()-1, dateien.size()-1);
     }
     
+    public void clear()
+    {
+        dateien.clear();
+        fireContentsChanged(this, 0, dateien.size()-1);
+    }
+    
     public void sort(FileComparer fc)
     {
         

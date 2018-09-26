@@ -32,7 +32,7 @@ public class Datei extends File
             {
                 Date d = new Date(this.lastModified());
                 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-                return String.format("%-20s %25s %30dKB ", this.getName(), sdf.format(d),this.getTotalSpace());
+                return String.format("%-20s %25s %30dKB ", this.getName(), sdf.format(d),this.length()/1000);
             }
         }catch(Exception ex)
         {

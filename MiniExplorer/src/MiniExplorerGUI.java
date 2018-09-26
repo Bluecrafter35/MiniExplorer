@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 public class MiniExplorerGUI extends javax.swing.JFrame
 {
     private DateiModell model = new DateiModell();
+    private File dir;
+    FileComparer fc = new FileComparer();
     
     /**
      * Creates new form MiniExplorerGUI
@@ -25,8 +27,8 @@ public class MiniExplorerGUI extends javax.swing.JFrame
     {
         initComponents();
         this.jlList.setModel(model);
-        File dir = new File(".");
-        FileComparer fc = new FileComparer();
+        dir = new File(".");
+        
         try {
             this.setTitle(dir.getCanonicalPath());
         } catch (IOException ex) {
@@ -42,6 +44,8 @@ public class MiniExplorerGUI extends javax.swing.JFrame
         }
         model.addDatei(new Datei(".."));
         model.sort(fc);
+        dir=new File(dir.getAbsolutePath());
+        dir = dir.getParentFile();
     }
 
     /**
@@ -92,7 +96,40 @@ public class MiniExplorerGUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_onChangeDir
         if(evt.getClickCount()>1)
         {
-            
+            Datei d = (Datei) model.getElementAt(jlList.getSelectedIndex());
+            if(d.getName().equalsIgnoreCase(".."))
+            {
+                dir = dir.getParentFile();
+                model.clear();
+                for(File f: dir.listFiles())
+                {
+                    //f.getAbsolutePath();
+                    d= new Datei(f.getAbsolutePath());
+                    model.addDatei(d);
+                    
+                }
+                model.addDatei(new Datei(".."));
+                model.sort(fc);
+            }
+            else
+            {
+                dir = new File(dir.getAbsoluteFile()+"\\"+d.getName());
+                model.clear();
+                for(File f: dir.listFiles())
+                {
+                    //f.getAbsolutePath();
+                    d= new Datei(f.getAbsolutePath());
+                    model.addDatei(d);
+                    
+                }
+                try {
+                    this.setTitle(dir.getCanonicalPath());
+                } catch (IOException ex) {
+                    Logger.getLogger(MiniExplorerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                model.addDatei(new Datei(".."));
+                model.sort(fc);
+            }
         }
     }//GEN-LAST:event_onChangeDir
 
