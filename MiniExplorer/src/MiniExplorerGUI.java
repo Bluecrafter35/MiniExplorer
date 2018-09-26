@@ -125,7 +125,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame
                     }
                     model.addDatei(new Datei(".."));
                     model.sort(fc);
-
+                    this.jlList.setSelectedIndex(0);    
                 }
                 else
                 {
@@ -145,6 +145,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame
                     }
                     model.addDatei(new Datei(".."));
                     model.sort(fc);
+                    this.jlList.setSelectedIndex(0);
                 }
             }
         }catch(Exception ex)
