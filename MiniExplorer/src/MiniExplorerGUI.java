@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -97,48 +98,58 @@ public class MiniExplorerGUI extends javax.swing.JFrame
 
     private void onChangeDir(java.awt.event.MouseEvent evt)//GEN-FIRST:event_onChangeDir
     {//GEN-HEADEREND:event_onChangeDir
-        if(evt.getClickCount()>1)
+        try
         {
-            Datei d = (Datei) model.getElementAt(jlList.getSelectedIndex());
-            if(d.getName().equalsIgnoreCase(".."))
+            if(evt.getClickCount()>1)
             {
-                dir = dir.getParentFile();
-                model.clear();
-                for(File f: dir.listFiles())
+                Datei d = (Datei) model.getElementAt(jlList.getSelectedIndex());
+                if(d.isFile())
                 {
-                    //f.getAbsolutePath();
-                    d= new Datei(f.getAbsolutePath());
-                    model.addDatei(d);
-                    
+                    throw new Exception("Leider können wir nur Ordner öffnen und keine Files");
                 }
-                try {
-                    this.setTitle(dir.getCanonicalPath());
-                } catch (IOException ex) {
-                    Logger.getLogger(MiniExplorerGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                model.addDatei(new Datei(".."));
-                model.sort(fc);
-                
-            }
-            else
-            {
-                dir = new File(dir.getAbsoluteFile()+"\\"+d.getName());
-                model.clear();
-                for(File f: dir.listFiles())
+                if(d.getName().equalsIgnoreCase(".."))
                 {
-                    //f.getAbsolutePath();
-                    d= new Datei(f.getAbsolutePath());
-                    model.addDatei(d);
-                    
+                    dir = dir.getParentFile();
+                    model.clear();
+                    for(File f: dir.listFiles())
+                    {
+                        //f.getAbsolutePath();
+                        d= new Datei(f.getAbsolutePath());
+                        model.addDatei(d);
+
+                    }
+                    try {
+                        this.setTitle(dir.getCanonicalPath());
+                    } catch (IOException ex) {
+                        Logger.getLogger(MiniExplorerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    model.addDatei(new Datei(".."));
+                    model.sort(fc);
+
                 }
-                try {
-                    this.setTitle(dir.getCanonicalPath());
-                } catch (IOException ex) {
-                    Logger.getLogger(MiniExplorerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                else
+                {
+                    dir = new File(dir.getAbsoluteFile()+"\\"+d.getName());
+                    model.clear();
+                    for(File f: dir.listFiles())
+                    {
+                        //f.getAbsolutePath();
+                        d= new Datei(f.getAbsolutePath());
+                        model.addDatei(d);
+
+                    }
+                    try {
+                        this.setTitle(dir.getCanonicalPath());
+                    } catch (IOException ex) {
+                        Logger.getLogger(MiniExplorerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    model.addDatei(new Datei(".."));
+                    model.sort(fc);
                 }
-                model.addDatei(new Datei(".."));
-                model.sort(fc);
             }
+        }catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_onChangeDir
 
